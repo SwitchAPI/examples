@@ -87,4 +87,6 @@ switchAuthorizationCall(authorizationToken, "/letters", {
 
 3. See more APIs by accessing to API Document space:
 
- + https://developer-demo.switchmail.com/apidoc/index.html
+```bash
+https://developer-demo.switchmail.com/apidoc/index.html
+```
