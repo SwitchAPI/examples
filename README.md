@@ -1,9 +1,10 @@
 # Switch API - examples
 This repository contains the examples for using Switch APIs
 
-### Goto https://developer-demo.switchmail.com/usage/dashboard
+### Getting Started - Where to get your API_KEY 
 
- + Retrieve your API_KEY to use when calling Switch APIs
++ Goto https://developer-demo.switchmail.com/usage/dashboard
++ Retrieve your API_KEY to use when calling Switch APIs
 
 1. Using API_KEY to get authorization session:
 
@@ -83,3 +84,7 @@ switchAuthorizationCall(authorizationToken, "/letters", {
     })
 }).catch(err => console.log(err))
 ```
+
+3. See more APIs by accessing to API Document space:
+
+ + https://developer-demo.switchmail.com/apidoc/index.html
