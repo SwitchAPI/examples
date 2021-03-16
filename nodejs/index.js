@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 
-const developerApiKey = process.env.API_KEY || "Your_api_key_here"
+const developerApiKey = process.env.API_KEY || "xK38CsC45SejE9IgtP1W2bhSWAcliCh7AHjP7QXc"
+const developerEmailAddress = process.env.EMAIL || "Your_developer_email@"
 
 const switchApiKeyCall = function (apikey, path, body, method) {
     const headerParams = {
@@ -30,7 +31,7 @@ let accessToken = null
 
 if (!accessToken) {
     switchApiKeyCall(developerApiKey, "/auth/token", {
-        email: process.env.EMAIL || "Your_developer_email@"
+        email: developerEmailAddress
     }, "POST").then(result => {
         accessToken = result.authorization
         console.log("Authorization", accessToken)
