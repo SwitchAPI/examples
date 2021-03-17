@@ -34,7 +34,7 @@ if (!accessToken) {
         email: developerEmailAddress
     }, "POST").then(result => {
         accessToken = result.authorization
-        console.log("Authorization", accessToken)
+        console.log("AUTHORIZATION:", accessToken ? "OK (You can reuse the accessToken for the next calls)" : result)
         if (accessToken) {
             switchAuthorizationCall(accessToken, "/letters", {
                 url: "http://www.africau.edu/images/default/sample.pdf",
@@ -62,11 +62,15 @@ if (!accessToken) {
                 ],
             }, "POST").then(letter => {
                 const requestId = letter.id
+                console.log("LETTER:", letter.id)
                 switchAuthorizationCall(accessToken, `/letters/${requestId}/confirm`, {
                     trackingId: letter.trackingId,
                     transaction: letter.transaction
                 }, "POST").then(result => {
-                    console.log(result)
+                    console.log("RESULT:", result)
+                    switchAuthorizationCall(accessToken, `/trackings/${letter.trackingId}`, {}, "GET").then(result => {
+                        console.log("TRACKING:", result)
+                    })
                 })
             }).catch(err => console.log(err))
         }
