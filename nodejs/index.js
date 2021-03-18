@@ -34,7 +34,7 @@ if (!accessToken) {
         email: developerEmailAddress
     }, "POST").then(result => {
         accessToken = result.authorization
-        console.log("AUTHORIZATION:", accessToken ? "OK (You can reuse the accessToken for the next calls)" : result)
+        console.log("AUTHORIZATION:", accessToken ? `OK (You can reuse the accessToken for the next calls)\n${accessToken}\n` : result)
         if (accessToken) {
             switchAuthorizationCall(accessToken, "/letters", {
                 url: "http://www.africau.edu/images/default/sample.pdf",
