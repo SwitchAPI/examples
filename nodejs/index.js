@@ -1,11 +1,12 @@
 const fetch = require('node-fetch');
 
-const developerApiKey = process.env.API_KEY || "xK38CsC45SejE9IgtP1W2bhSWAcliCh7AHjP7QXc"
+const developerApiKey = process.env.API_KEY || "Your_api_key_here"
 const developerEmailAddress = process.env.EMAIL || "Your_developer_email@"
 
 const switchApiKeyCall = function (apikey, path, body, method) {
     const headerParams = {
         'Content-Type': 'application/json',
+        'x-switch-api-version': '0.1.0',
         'x-api-key': `${apikey}`
     }
     return fetch('https://atbqgbgotb.execute-api.us-east-1.amazonaws.com/demo' + path, {
@@ -18,6 +19,7 @@ const switchApiKeyCall = function (apikey, path, body, method) {
 const switchAuthorizationCall = function (token, path, body, method) {
     const headerParams = {
         'Content-Type': 'application/json',
+        'x-switch-api-version': '0.1.0',
         'Authorization': `${token}`
     }
     return fetch('https://atbqgbgotb.execute-api.us-east-1.amazonaws.com/demo' + path, {
