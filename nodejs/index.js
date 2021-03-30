@@ -78,7 +78,7 @@ if (!accessToken) {
                                     switchAuthorizationCall(accessToken, `/trackings/${letter.trackingId}`, undefined, "GET").then(result => {
                                         console.log("TRACKING:", result)
                                     })
-                                }, 15000)
+                                }, 3000)
                             }
                         })
                     }, 5000)
