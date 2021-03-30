@@ -70,9 +70,18 @@ if (!accessToken) {
                     transaction: letter.transaction
                 }, "POST").then(result => {
                     console.log("RESULT:", result)
-                    switchAuthorizationCall(accessToken, `/trackings/${letter.trackingId}`, {}, "GET").then(result => {
-                        console.log("TRACKING:", result)
-                    })
+                    setTimeout(function() {
+                        switchAuthorizationCall(accessToken, `/trackings/${letter.trackingId}`, undefined, "GET").then(result => {
+                            console.log("TRACKING:", result)
+                            if (result.status == 'IN-SYNC') {
+                                setTimeout(function() {
+                                    switchAuthorizationCall(accessToken, `/trackings/${letter.trackingId}`, undefined, "GET").then(result => {
+                                        console.log("TRACKING:", result)
+                                    })
+                                }, 15000)
+                            }
+                        })
+                    }, 5000)
                 })
             }).catch(err => console.log(err))
         }
