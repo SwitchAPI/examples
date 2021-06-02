@@ -29,7 +29,7 @@ const switchAuthorizationCall = function (token, path, body, method) {
     }).then(response => response.json())
 }
 
-let accessToken = null
+let accessToken = process.env.AUTH_TOKEN;
 
 if (!accessToken) {
     switchApiKeyCall(developerApiKey, "/auth/token", {
@@ -85,5 +85,52 @@ if (!accessToken) {
                 })
             }).catch(err => console.log(err))
         }
+    }).catch(err => console.log(err))
+} else {
+    switchAuthorizationCall(accessToken, "/letters", {
+        url: "http://www.africau.edu/images/default/sample.pdf",
+        email: "john.doe@email.com",
+        sender: {
+            "firstName": "John",
+            "lastName": "DC",
+            "address1": "RM-2244",
+            "address2": "1st Floor",
+            "state": "TX",
+            "city": "West Lake Hills",
+            "postcode": "78746"
+        },
+        receiver: [
+            {
+                "firstName": "John",
+                "lastName": "DC",
+                "zipCode": "08865",
+                "postcode": "08865",
+                "state": "NJ",
+                "city": "Phillipsburg",
+                "address1": "RT-122",
+                "address2": "2nd Floor"
+            }
+        ],
+    }, "POST").then(letter => {
+        const requestId = letter.id
+        console.log("LETTER:", letter.id)
+        switchAuthorizationCall(accessToken, `/letters/${requestId}/confirm`, {
+            trackingId: letter.trackingId,
+            transaction: letter.transaction
+        }, "POST").then(result => {
+            console.log("RESULT:", result)
+            setTimeout(function() {
+                switchAuthorizationCall(accessToken, `/trackings/${letter.trackingId}`, undefined, "GET").then(result => {
+                    console.log("TRACKING:", result)
+                    if (result.status == 'IN-SYNC') {
+                        setTimeout(function() {
+                            switchAuthorizationCall(accessToken, `/trackings/${letter.trackingId}`, undefined, "GET").then(result => {
+                                console.log("TRACKING:", result)
+                            })
+                        }, 3000)
+                    }
+                })
+            }, 5000)
+        })
     }).catch(err => console.log(err))
 }

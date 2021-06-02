@@ -38,6 +38,8 @@ switchApiKeyCall("Your_api_key_here", "/auth/token", { email: "your_email@gmail.
 
 ```javascript
 
+let accessToken = process.env.AUTH_TOKEN;
+
 const switchAuthorizationCall = function (token, path, body, method) {
     const headerParams = {
         'Content-Type': 'application/json',
